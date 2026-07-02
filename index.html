@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вступить в закрытую команду Forex-трейдеров</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+        }
+        /* Стилизация скроллбара под темную тему */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #111827;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981;
+        }
+        /* Стилизация ползунка калькулятора */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #10b981;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.9);
+            transition: transform 0.1s;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        /* Анимация бесконечной бегущей строки */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-inner {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+        .marquee-inner:hover {
+            animation-play-state: paused;
+        }
+        /* Премиальное свечение для карточек преимуществ */
+        .feature-card {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.35);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+    </style>
+</head>
+<body class="text-zinc-100 min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-[#10b981] selection:text-black">
+
+    <header class="border-b border-zinc-900 bg-[#050505]/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-[#10b981] animate-pulse shadow-[0_0_12px_rgba(16,185,129,0.8)]"></span>
+                <span class="font-black text-white tracking-widest text-sm uppercase">Forex Team</span>
+            </div>
+            <button onclick="scrollToForm()" class="text-xs font-bold bg-zinc-900/50 border border-zinc-800 px-5 py-2.5 rounded-full hover:border-[#10b981] hover:text-[#10b981] transition-all duration-300">
+                Занять место
+            </button>
+        </div>
+    </header>
+
+    <section class="border-b border-zinc-900/80 bg-zinc-950 py-2 overflow-hidden select-none">
+        <div class="max-w-7xl mx-auto flex items-center">
+            <div class="marquee-inner flex gap-8 items-center text-xs font-mono">
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">EUR/USD:</span> <span id="ticker-eurusd" class="font-bold text-[#10b981]">1.09490</span> <span class="text-[#10b981] text-[10px] font-bold">▲ +0.14%</span></div>
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">GBP/USD:</span> <span id="ticker-gbpusd" class="font-bold text-[#10b981]">1.26820</span> <span class="text-[#10b981] text-[10px] font-bold">▲ +0.08%</span></div>
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">USD/JPY:</span> <span id="ticker-usdjpy" class="font-bold text-rose-500">156.410</span> <span class="text-rose-500 text-[10px] font-bold">▼ -0.22%</span></div>
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">XAU/USD:</span> <span id="ticker-xauusd" class="font-bold text-[#10b981]">2324.50</span> <span class="text-[#10b981] text-[10px] font-bold">▲ +0.45%</span></div>
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">BTC/USD:</span> <span id="ticker-btcusd" class="font-bold text-[#10b981]">67240.10</span> <span class="text-[#10b981] text-[10px] font-bold">▲ +1.12%</span></div>
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">ETH/USD:</span> <span id="ticker-ethusd" class="font-bold text-[#10b981]">3520.40</span> <span class="text-[#10b981] text-[10px] font-bold">▲ +0.95%</span></div>
+                </div>
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">EUR/USD:</span> <span id="ticker-eurusd-dup" class="font-bold text-[#10b981]">1.09490</span> <span class="text-[#10b981] text-[10px] font-bold">▲ +0.14%</span></div>
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">GBP/USD:</span> <span id="ticker-gbpusd-dup" class="font-bold text-[#10b981]">1.26820</span> <span class="text-[#10b981] text-[10px] font-bold">▲ +0.08%</span></div>
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">USD/JPY:</span> <span id="ticker-usdjpy-dup" class="font-bold text-rose-500">156.410</span> <span class="text-rose-500 text-[10px] font-bold">▼ -0.22%</span></div>
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">XAU/USD:</span> <span id="ticker-xauusd-dup" class="font-bold text-[#10b981]">2324.50</span> <span class="text-[#10b981] text-[10px] font-bold">▲ +0.45%</span></div>
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">BTC/USD:</span> <span id="ticker-btcusd-dup" class="font-bold text-[#10b981]">67240.10</span> <span class="text-[#10b981] text-[10px] font-bold">▲ +1.12%</span></div>
+                    <div class="flex items-center gap-1.5"><span class="text-zinc-400">ETH/USD:</span> <span id="ticker-ethusd-dup" class="font-bold text-[#10b981]">3520.40</span> <span class="text-[#10b981] text-[10px] font-bold">▲ +0.95%</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="flex-grow">
+        <section class="relative max-w-6xl mx-auto px-4 pt-16 pb-24 text-center overflow-hidden">
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] bg-[#10b981]/10 rounded-full blur-[130px] pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-3xl mx-auto space-y-6">
+                <span class="inline-flex items-center gap-1.5 bg-[#10b981]/10 text-[#10b981] border border-[#10b981]/20 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase animate-pulse">
+                    Финальный шаг перед стартом
+                </span>
+                
+                <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.1] bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent">
+                    Присоединитесь к команде Forex-трейдеров
+                </h1>
+                
+                <p class="text-zinc-400 text-sm md:text-base leading-relaxed max-w-2xl mx-auto font-light">
+                    Вы успешно прошли предварительную квалификацию в чат-боте. Оставьте свои контактные данные ниже, чтобы зафиксировать за собой место, получить доступ к сигналам куратора и забрать торговые материалы.
+                </p>
+
+                <div class="pt-4">
+                    <button onclick="scrollToForm()" class="px-8 py-4 bg-gradient-to-r from-[#059669] to-[#10b981] text-black font-extrabold text-sm rounded-xl hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 shadow-[0_4px_20px_rgba(16,185,129,0.3)] hover:shadow-[0_4px_25px_rgba(16,185,129,0.5)]">
+                        Занять место в команде <i class="fa-solid fa-arrow-down ml-2 animate-bounce"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="lg:col-span-2 relative rounded-2xl border border-zinc-800 bg-[#0c0c0c]/90 p-4 backdrop-blur-sm overflow-hidden shadow-2xl">
+                    <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3 mb-4 text-xs text-zinc-500">
+                        <div class="flex items-center gap-3">
+                            <span class="font-mono text-zinc-300 font-bold text-sm">EUR/USD, 4H</span>
+                            <span class="text-[#10b981] bg-[#10b981]/10 px-2.5 py-0.5 rounded font-bold animate-pulse text-[10px] tracking-wider uppercase">Active Buy</span>
+                        </div>
+                        <div class="flex gap-3 font-mono text-[11px] max-md:hidden">
+                            <span>O: <span id="price-o" class="text-zinc-300">1.09450</span></span>
+                            <span class="text-[#10b981]">H: <span id="price-h">1.09520</span></span>
+                            <span class="text-rose-500">L: <span id="price-l">1.09380</span></span>
+                            <span>C: <span id="price-c" class="text-[#10b981] font-bold">1.09490</span></span>
+                        </div>
+                    </div>
+                    
+                    <canvas id="live-chart" class="w-full h-[180px] md:h-[260px] block cursor-crosshair"></canvas>
+                </div>
+
+                <div class="rounded-2xl border border-zinc-800 bg-[#0c0c0c]/90 p-4 backdrop-blur-sm shadow-2xl text-left flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center border-b border-zinc-800/80 pb-3 mb-4">
+                            <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider">Мониторинг сигналов</span>
+                            <span class="w-2 h-2 rounded-full bg-[#10b981] animate-ping"></span>
+                        </div>
+                        
+                        <div class="space-y-3.5" id="signals-feed-container">
+                            </div>
+                    </div>
+                    <div class="pt-4 border-t border-zinc-900 mt-4 flex items-center justify-between text-[11px] text-zinc-500 font-mono">
+                        <span>Точность куратора: <span class="text-[#10b981] font-bold">~89.4%</span></span>
+                        <span>Обновление: <span class="text-zinc-300 font-bold">Live</span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-[#080808] border-t border-zinc-900 relative">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-[#10b981]/5 rounded-full blur-[140px] pointer-events-none"></div>
+            
+            <div class="max-w-6xl mx-auto px-4 text-center">
+                <span class="text-xs font-bold text-[#10b981] uppercase tracking-[2px] mb-3 inline-block">Полная инфраструктура</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">Всё готово для твоих сделок</h2>
+                <p class="text-zinc-400 text-sm max-w-xl mx-auto mb-16">Каждый участник команды получает полный пакет инструментов для комфортной и безопасной торговли.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="feature-card border border-zinc-900 bg-[#0a0a0a]/80 p-6 rounded-2xl text-left relative overflow-hidden group">
+                        <div class="w-12 h-12 rounded-xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center text-[#10b981] text-lg mb-6 group-hover:bg-[#10b981] group-hover:text-black transition-all duration-300">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Робот-ассистент</h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed font-light">Специализированный софт, который анализирует рынок 24/7 и присылает уведомления о лучших точках входа прямо на телефон.</p>
+                    </div>
+
+                    <div class="feature-card border border-zinc-900 bg-[#0a0a0a]/80 p-6 rounded-2xl text-left relative overflow-hidden group">
+                        <div class="w-12 h-12 rounded-xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center text-[#10b981] text-lg mb-6 group-hover:bg-[#10b981] group-hover:text-black transition-all duration-300">
+                            <i class="fa-solid fa-signal"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Сигналы от кураторов</h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed font-light">Готовые точки входа с точными уровнями фиксации прибыли и минимизацией рисков. Тебе остаётся просто продублировать сделку.</p>
+                    </div>
+
+                    <div class="feature-card border border-zinc-900 bg-[#0a0a0a]/80 p-6 rounded-2xl text-left relative overflow-hidden group">
+                        <div class="w-12 h-12 rounded-xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center text-[#10b981] text-lg mb-6 group-hover:bg-[#10b981] group-hover:text-black transition-all duration-300">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Обучение с нуля</h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed font-light">Доступ к пошаговым интерактивным гайдам и видео-инструкциям, которые превратят тебя из полного новичка в уверенного трейдера.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-[#050505] border-t border-zinc-900">
+            <div class="max-w-4xl mx-auto px-4 text-center space-y-4">
+                <span class="text-xs font-bold text-[#10b981] uppercase tracking-[2px]">Калькулятор трейдера</span>
+                <h2 class="text-3xl font-black text-white tracking-tight">Рассчитайте свою потенциальную прибыль</h2>
+                <p class="text-xs text-zinc-500 max-w-xl mx-auto">Выберите размер торгового баланса, который планируете использовать для торговли по сигналам куратора и нашего советника.</p>
+                
+                <div class="mt-10 bg-[#0c0c0c]/80 border border-zinc-800 rounded-2xl p-6 md:p-8 text-left max-w-2xl mx-auto backdrop-blur-sm">
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xs text-zinc-400 font-semibold uppercase tracking-wider">Торговый баланс:</span>
+                                <span class="text-2xl font-black text-[#10b981]" id="calc-deposit-val">$300</span>
+                            </div>
+                            <input type="range" id="calc-range" min="50" max="3000" step="50" value="300" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-[#10b981]">
+                            <div class="flex justify-between text-[10px] text-zinc-600 mt-2 font-bold font-mono">
+                                <span>$50</span>
+                                <span>$1 000</span>
+                                <span>$2 000</span>
+                                <span>$3 000</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-zinc-800/80">
+                            <div class="bg-zinc-900/40 border border-zinc-800/50 rounded-xl p-4 text-center">
+                                <span class="text-[9px] text-zinc-500 uppercase tracking-widest font-bold block mb-1">Прибыль / Месяц</span>
+                                <span class="text-xl font-black text-white font-mono" id="calc-profit-val">$3 000</span>
+                            </div>
+                            <div class="bg-zinc-900/40 border border-zinc-800/50 rounded-xl p-4 text-center">
+                                <span class="text-[9px] text-zinc-500 uppercase tracking-widest font-bold block mb-1">Сделок в день</span>
+                                <span class="text-xl font-black text-zinc-300 font-mono">2 - 5</span>
+                            </div>
+                            <div class="bg-[#10b981]/5 border border-[#10b981]/20 rounded-xl p-4 text-center">
+                                <span class="text-[9px] text-[#10b981] uppercase tracking-widest font-bold block mb-1">Уровень риска</span>
+                                <span class="text-sm font-extrabold text-[#10b981] block mt-1.5 uppercase tracking-wide">Минимальный</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="form-section" class="border-t border-zinc-900 bg-[#0c0c0c]/10 py-24 relative">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="bg-[#0c0c0c]/60 border border-[#10b981]/30 rounded-2xl p-6 shadow-[0_0_25px_rgba(16,185,129,0.05)] flex flex-col items-center text-center">
+                            <span class="text-[10px] text-zinc-500 font-bold uppercase tracking-[2px] mb-4">До закрытия регистрации осталось:</span>
+                            
+                            <div class="flex items-center gap-3 mb-5 font-mono">
+                                <div class="flex flex-col items-center">
+                                    <span id="timer-minutes" class="text-4xl md:text-5xl font-black text-[#10b981] leading-none tracking-widest filter drop-shadow-[0_0_10px_rgba(16,185,129,0.3)]">15</span>
+                                    <span class="text-[9px] text-zinc-600 uppercase font-bold mt-2">мин</span>
+                                </div>
+                                <span class="text-3xl font-bold text-[#10b981] animate-pulse leading-none -mt-5">:</span>
+                                <div class="flex flex-col items-center">
+                                    <span id="timer-seconds" class="text-4xl md:text-5xl font-black text-[#10b981] leading-none tracking-widest filter drop-shadow-[0_0_10px_rgba(16,185,129,0.3)]">00</span>
+                                    <span class="text-[9px] text-zinc-600 uppercase font-bold mt-2">сек</span>
+                                </div>
+                            </div>
+
+                            <div class="w-full bg-zinc-900 h-2 rounded-full overflow-hidden mb-4">
+                                <div id="progress-bar" class="bg-gradient-to-r from-[#059669] to-[#10b981] h-full rounded-full shadow-[0_0_10px_rgba(16,185,129,0.4)] transition-all duration-1000" style="width: 68%;"></div>
+                            </div>
+
+                            <div class="text-sm font-semibold">
+                                Осталось мест: <span id="spots-count" class="text-rose-500 font-black animate-pulse">32 из 100</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7">
+                        <div id="form-card" class="bg-[#0c0c0c]/40 border border-zinc-800 p-6 md:p-8 rounded-2xl shadow-2xl backdrop-blur-md">
+                            <h3 class="text-2xl font-black text-white mb-2">Оставить заявку</h3>
+                            <p class="text-xs text-zinc-400 mb-6">В ближайшее время с вами свяжется куратор по указанному номеру.</p>
+
+                            <form id="forex-lead-form" class="space-y-4">
+                                <div>
+                                    <label class="block text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-1.5">Ваше Имя и Фамилия</label>
+                                    <input type="text" id="user-fullname" name="fullname" placeholder="Иван Иванов" class="w-full bg-[#050505] border border-zinc-800 focus:border-[#10b981] rounded-xl px-4 py-3.5 text-sm text-white placeholder-zinc-700 outline-none transition-all duration-300">
+                                    <span id="error-fullname" class="text-xs text-rose-500 mt-1 hidden"></span>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-1.5">Телефон (РФ Мобильный)</label>
+                                    <input type="tel" id="user-phone" name="phone" placeholder="+7 (999) 123-45-67" class="w-full bg-[#050505] border border-zinc-800 focus:border-[#10b981] rounded-xl px-4 py-3.5 text-sm text-white placeholder-zinc-700 outline-none transition-all duration-300">
+                                    <span id="error-phone" class="text-xs text-rose-500 mt-1 hidden"></span>
+                                </div>
+
+                                <div class="flex items-start gap-2.5 pt-2">
+                                    <input type="checkbox" id="user-agreement" checked class="mt-1 accent-[#10b981] w-4 h-4">
+                                    <label for="user-agreement" class="text-xs text-zinc-500 leading-normal select-none">
+                                        Я согласен с <button type="button" onclick="togglePrivacyModal()" class="text-[#10b981] hover:underline">Политикой конфиденциальности</button>
+                                    </label>
+                                </div>
+
+                                <button type="submit" id="submit-btn" class="w-full py-4 mt-2 bg-gradient-to-r from-[#059669] to-[#10b981] hover:from-[#047857] hover:to-[#059669] text-black font-extrabold text-sm rounded-xl tracking-wider uppercase transition-all duration-300 shadow-md">
+                                    Записаться бесплатно
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-[#080808] border-t border-zinc-900 relative overflow-hidden">
+            <div class="max-w-5xl mx-auto px-4 text-center">
+                <span class="text-xs font-bold text-[#10b981] uppercase tracking-[2px] mb-3 inline-block">Отзывы участников</span>
+                <h2 class="text-3xl font-black text-white mb-12 tracking-tight">Что говорят о нашей команде</h2>
+                
+                <div class="relative w-full max-w-4xl mx-auto overflow-hidden rounded-2xl">
+                    <div id="reviews-track" class="flex transition-transform duration-500 ease-in-out gap-6 text-left">
+                        
+                        <div class="review-slide w-full md:w-[calc(50%-12px)] flex-shrink-0 bg-[#0c0c0c]/80 border border-zinc-800 p-6 rounded-2xl relative shadow-lg">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#10b981] font-bold">АП</div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Алексей Петров</h4>
+                                    <span class="text-[10px] text-zinc-500">Член команды с мая 2025 г.</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                                «Отличная команда! Благодаря ежедневным торговым сигналам и поддержке куратора, чувствую себя уверенно на рынке. Все инструменты передали в первый же день. Спасибо!»
+                            </p>
+                        </div>
+
+                        <div class="review-slide w-full md:w-[calc(50%-12px)] flex-shrink-0 bg-[#0c0c0c]/80 border border-zinc-800 p-6 rounded-2xl relative shadow-lg">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#10b981] font-bold">ДМ</div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Дмитрий Морозов</h4>
+                                    <span class="text-[10px] text-zinc-500">Член команды с января 2026 г.</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                                «Уже пробовал торговать сам, слил пару депозитов. Здесь же совсем другой подход — робот помогает минимизировать риски, а аналитика от кураторов спасает от глупых сделок. Рекомендую.»
+                            </p>
+                        </div>
+
+                        <div class="review-slide w-full md:w-[calc(50%-12px)] flex-shrink-0 bg-[#0c0c0c]/80 border border-zinc-800 p-6 rounded-2xl relative shadow-lg">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#10b981] font-bold">ЕВ</div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Елена Васильева</h4>
+                                    <span class="text-[10px] text-zinc-500">Член команды с сентября 2025 г.</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                                «Долго сомневалась, но обучение построено настолько понятно, что даже я со своими нулевыми знаниями во всём разобралась. Наконец-то вышла в стабильный плюс по сделкам!»
+                            </p>
+                        </div>
+
+                        <div class="review-slide w-full md:w-[calc(50%-12px)] flex-shrink-0 bg-[#0c0c0c]/80 border border-zinc-800 p-6 rounded-2xl relative shadow-lg">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#10b981] font-bold">МК</div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Максим Козлов</h4>
+                                    <span class="text-[10px] text-zinc-500">Член команды с марта 2026 г.</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                                «Совмещаю торговлю с основной работой. Уведомления о сигналах приходят вовремя, открываю сделки прямо с телефона за пару минут. Отличный дополнительный доход без напряга.»
+                            </p>
+                        </div>
+
+                        <div class="review-slide w-full md:w-[calc(50%-12px)] flex-shrink-0 bg-[#0c0c0c]/80 border border-zinc-800 p-6 rounded-2xl relative shadow-lg">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#10b981] font-bold">АК</div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Анна Кузнецова</h4>
+                                    <span class="text-[10px] text-zinc-500">Член команды с ноября 2025 г.</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                                «Изумительное комьюнити! В закрытом чате всегда подскажут и разберут ошибки. Поддержка от кураторов буквально круглосуточная. Очень рада, что прошла отбор.»
+                            </p>
+                        </div>
+
+                        <div class="review-slide w-full md:w-[calc(50%-12px)] flex-shrink-0 bg-[#0c0c0c]/80 border border-zinc-800 p-6 rounded-2xl relative shadow-lg">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#10b981] font-bold">ИС</div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Игорь Соколов</h4>
+                                    <span class="text-[10px] text-zinc-500">Член команды с февраля 2026 г.</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                                «Предоставленный советник-робот — просто бомба. Главное соблювать правила риск-менеджмента, которые дают на обучении. Мой баланс стабильно увеличивается месяц к месяцу.»
+                            </p>
+                        </div>
+
+                        <div class="review-slide w-full md:w-[calc(50%-12px)] flex-shrink-0 bg-[#0c0c0c]/80 border border-zinc-800 p-6 rounded-2xl relative shadow-lg">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#10b981] font-bold">ОН</div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Ольга Новикова</h4>
+                                    <span class="text-[10px] text-zinc-500">Член команды с декабря 2025 г.</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                                «Торговые сигналы очень точные. Сначала проверяла всё на демо-счете, теперь перешла на реальный депозит. Результатом за первый месяц безумно довольна!»
+                            </p>
+                        </div>
+
+                        <div class="review-slide w-full md:w-[calc(50%-12px)] flex-shrink-0 bg-[#0c0c0c]/80 border border-zinc-800 p-6 rounded-2xl relative shadow-lg">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#10b981] font-bold">ВО</div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Владислав Орлов</h4>
+                                    <span class="text-[10px] text-zinc-500">Член команды с апреля 2026 г.</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                                «Это лучшая партнерская сеть по трейдингу. Никакой воды — только практические сессии, разборы рынка и готовые точки входа. Огромная благодарность создателям команды.»
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="slider-dots" class="flex justify-center items-center gap-2 mt-8"></div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-[#050505] border-t border-zinc-900 relative">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="text-xs font-bold text-[#10b981] uppercase tracking-[2px] mb-3 inline-block">Ответы на вопросы</span>
+                    <h2 class="text-3xl font-black text-white tracking-tight">Популярные вопросы кандидатов</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="border border-zinc-800/80 bg-[#0c0c0c]/20 rounded-2xl overflow-hidden transition-all duration-300">
+                        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 flex justify-between items-center text-sm font-bold text-white hover:text-[#10b981] transition-colors">
+                            <span>Вступление в команду действительно полностью бесплатное?</span>
+                            <i class="fa-solid fa-chevron-down text-xs text-zinc-500 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                            <p class="px-6 pb-5 text-xs leading-relaxed text-zinc-400">
+                                Да, абсолютно бесплатное. Мы не берем плату за сигналы, советники или обучение. Наша команда зарабатывает на проценте от торговой комиссии, которую нам выплачивает сам брокер-партнер за активность рефералов. Это классическое взаимовыгодное партнерство: вы торгуете в плюс по нашим материалам, а мы получаем прибыль от платформы.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border border-zinc-800/80 bg-[#0c0c0c]/20 rounded-2xl overflow-hidden transition-all duration-300">
+                        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 flex justify-between items-center text-sm font-bold text-white hover:text-[#10b981] transition-colors">
+                            <span>Что делать, если у меня нулевой опыт в трейдинге?</span>
+                            <i class="fa-solid fa-chevron-down text-xs text-zinc-500 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                            <p class="px-6 pb-5 text-xs leading-relaxed text-zinc-400">
+                                Более 90% наших участников начинали абсолютно с нуля. Обучение построено пошагово: от базовой установки торгового терминала на телефон до копирования первых сделок куратора. Кроме того, вам выдается полностью автоматический робот-советник, который сводит влияние человеческого фактора к минимуму.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border border-zinc-800/80 bg-[#0c0c0c]/20 rounded-2xl overflow-hidden transition-all duration-300">
+                        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 flex justify-between items-center text-sm font-bold text-white hover:text-[#10b981] transition-colors">
+                            <span>Какая сумма необходима для начала работы?</span>
+                            <i class="fa-solid fa-chevron-down text-xs text-zinc-500 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                            <p class="px-6 pb-5 text-xs leading-relaxed text-zinc-400">
+                                Вы можете начинать с абсолютно любой комфортной для вас суммы. Наша система и торговый советник легко адаптируются под любой баланс. Вы всегда можете начать на демо-счете или центовом счете, протестировать точность сигналов и работоспособность робота абсолютно без риска, а уже потом перейти на более крупные объемы.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border border-zinc-800/80 bg-[#0c0c0c]/20 rounded-2xl overflow-hidden transition-all duration-300">
+                        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 flex justify-between items-center text-sm font-bold text-white hover:text-[#10b981] transition-colors">
+                            <span>Сколько времени в день будет уходить на торговлю?</span>
+                            <i class="fa-solid fa-chevron-down text-xs text-zinc-500 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                            <p class="px-6 pb-5 text-xs leading-relaxed text-zinc-400">
+                                В среднем — от 15 до 30 минут в день. Сигналы приходят в закрытый чат в виде готовых параметров для сделки. Ваша задача — просто скопировать их в приложение на своем мобильном телефоне (это занимает не более 2 минут на одну сделку). Автоматический советник работает полностью автономно и не требует вашего личного времени.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-zinc-900 bg-[#030303] py-10 text-center text-xs text-zinc-600">
+        <div class="max-w-6xl mx-auto px-4 space-y-4">
+            <p>&copy; 2026 Forex Team. Все права защищены.</p>
+            <p class="max-w-2xl mx-auto text-[10px] leading-relaxed text-zinc-700">
+                Предупреждение о рисках: Торговля на валютном рынке Forex сопряжена с высокими рисками потери вашего капитала. Торговые советники и сигналы носят исключительно информационный характер.
+            </p>
+            <div class="pt-2">
+                <button onclick="togglePrivacyModal()" class="text-zinc-500 hover:text-[#10b981] transition-colors duration-200">
+                    Политика конфиденциальности
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <div id="privacy-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-all duration-300">
+        <div class="bg-[#0c0c0c] border border-zinc-800 max-w-2xl w-full max-h-[80vh] rounded-2xl p-6 overflow-y-auto shadow-2xl relative">
+            <button onclick="togglePrivacyModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-[#10b981] text-lg transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <h3 class="text-xl font-bold text-white mb-4 border-b border-zinc-800 pb-2">Политика конфиденциальности</h3>
+            <div class="space-y-4 text-xs text-zinc-400 leading-relaxed">
+                <p><strong>1. Общие положения:</strong> Настоящая политика определяет порядок обработки персональных данных, собираемых на данном лендинге для целей связи и предоставления бесплатных материалов закрытой команды Forex.</p>
+                <p><strong>2. Какие данные собираются:</strong> Мы собираем только то, что вы вводите добровольно: ваше имя, фамилию и номер телефона.</p>
+                <p><strong>3. Цели обработки:</strong> Установление обратной связи, передача доступа к торговому боту, сигналам и консультациям.</p>
+                <p><strong>4. Защита данных:</strong> Мы никогда не передаем ваши контакты третьим лицам. Вы в любой момент можете отозвать согласие через вашего куратора в чат-боте.</p>
+            </div>
+            <button onclick="togglePrivacyModal()" class="w-full mt-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs rounded-lg transition-colors duration-200">
+                Ясно, закрыть окно
+            </button>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-5 left-5 z-50 flex flex-col gap-3 pointer-events-none max-w-sm w-full px-4 md:px-0"></div>
+
+    <script>
+        /* =======================================================
+           КОНФИГУРАЦИЯ TELEGRAM (ДАННЫЕ КАНАЛА И ИСТОЧНИКОВ ВНЕДРЕНЫ)
+           ======================================================= */
+        const TG_BOT_TOKEN = "8880332317:AAFdkJp7vVcMdoJWQ0WjF7brPX6KDblK6Ac"; 
+        const TG_CHAT_ID = atob("LTU0MzM3ODQ2NDA="); 
+
+        window.addEventListener('load', function() {
+            initLiveChart();
+            initReviewsSlider();
+            initPhoneMask();
+            initDynamicSeatsAndToasts();
+            initCalculator();
+            initLiveTicker();
+            initLiveSignalsFeed();
+        });
+
+        /* =======================================================
+           1. БЕГУЩАЯ СТРОКА С ЖИВЫМИ МИКРОКОЛЕБАНИЯМИ
+           ======================================================= */
+        function initLiveTicker() {
+            const assets = {
+                eurusd: { val: 1.09490, decimals: 5, prefix: "" },
+                gbpusd: { val: 1.26820, decimals: 5, prefix: "" },
+                usdjpy: { val: 156.410, decimals: 3, prefix: "" },
+                xauusd: { val: 2324.50, decimals: 2, prefix: "" },
+                btcusd: { val: 67240.10, decimals: 2, prefix: "" },
+                ethusd: { val: 3520.40, decimals: 2, prefix: "" }
+            };
+
+            setInterval(() => {
+                Object.keys(assets).forEach(key => {
+                    const asset = assets[key];
+                    const change = (Math.random() - 0.48) * (asset.val * 0.0002);
+                    asset.val += change;
+                    
+                    const els = [document.getElementById(`ticker-${key}`), document.getElementById(`ticker-${key}-dup`)];
+                    els.forEach(el => {
+                        if (el) {
+                            el.innerText = asset.val.toFixed(asset.decimals);
+                            if (change >= 0) {
+                                el.className = "font-bold text-[#10b981]";
+                            } else {
+                                el.className = "font-bold text-rose-500";
+                            }
+                        }
+                    });
+                });
+            }, 2500);
+        }
+
+        /* =======================================================
+           2. ЖИВАЯ ЛЕНТА СИГНАЛОВ (FEED)
+           ======================================================= */
+        function initLiveSignalsFeed() {
+            const container = document.getElementById('signals-feed-container');
+            if (!container) return;
+
+            const mockSignals = [
+                { pair: "EUR/USD", action: "BUY", price: "1.09420", result: "+$140", status: "Closed Profit", time: "5 минут назад" },
+                { pair: "BTC/USD", action: "BUY", price: "66910.40", result: "+$320", status: "Closed Profit", time: "18 минут назад" },
+                { pair: "XAU/USD", action: "SELL", price: "2329.10", result: "+$210", status: "Closed Profit", time: "34 минуты назад" },
+                { pair: "GBP/USD", action: "BUY", price: "1.26710", result: "+$95", status: "Closed Profit", time: "1 час назад" }
+            ];
+
+            function renderSignals() {
+                container.innerHTML = '';
+                mockSignals.forEach(sig => {
+                    const div = document.createElement('div');
+                    div.className = "flex items-center justify-between bg-zinc-950/60 border border-zinc-900/60 p-2.5 rounded-xl text-xs font-mono transition-all duration-500";
+                    div.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-white">${sig.pair}</span>
+                            <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${sig.action === 'BUY' ? 'bg-[#10b981]/10 text-[#10b981]' : 'bg-rose-500/10 text-rose-500'}">${sig.action}</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[#10b981] font-bold">${sig.result}</span>
+                            <span class="block text-[9px] text-zinc-500 font-sans">${sig.time}</span>
+                        </div>
+                    `;
+                    container.appendChild(container.ownerDocument.createElement('div')).replaceWith(div);
+                });
+            }
+
+            renderSignals();
+
+            const pairs = ["EUR/USD", "GBP/USD", "USD/JPY", "XAU/USD", "BTC/USD", "ETH/USD"];
+            setInterval(() => {
+                const randomPair = pairs[Math.floor(Math.random() * pairs.length)];
+                const randomAction = Math.random() > 0.4 ? "BUY" : "SELL";
+                const profitAmount = Math.floor(Math.random() * 240) + 60;
+                
+                const newSignal = {
+                    pair: randomPair,
+                    action: randomAction,
+                    result: `+$${profitAmount}`,
+                    time: "Только что"
+                };
+
+                mockSignals.unshift(newSignal);
+                if (mockSignals.length > 4) mockSignals.pop();
+
+                renderSignals();
+            }, 45000);
+        }
+
+        /* =======================================================
+           3. ЖИВОЙ ИНТЕРАКТИВНЫЙ ГРАФИК (HTML5 CANVAS)
+           ======================================================= */
+        function initLiveChart() {
+            const canvas = document.getElementById('live-chart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            let candles = [];
+            let price = 1.09350;
+            const totalCandles = 24;
+
+            for (let i = 0; i < totalCandles; i++) {
+                let change = (Math.random() - 0.44) * 0.00040; 
+                let open = price;
+                let close = price + change;
+                let high = Math.max(open, close) + Math.random() * 0.00015;
+                let low = Math.min(open, close) - Math.random() * 0.00015;
+                candles.push({ open, close, high, low });
+                price = close;
+            }
+
+            function getMinMax() {
+                let min = Infinity, max = -Infinity;
+                candles.forEach(c => {
+                    if (c.low < min) min = c.low;
+                    if (c.high > max) max = c.high;
+                });
+                return { min: min - 0.00015, max: max + 0.00015 };
+            }
+
+            function updateHeaderDisplay(currentCandle) {
+                document.getElementById('price-o').innerText = currentCandle.open.toFixed(5);
+                document.getElementById('price-h').innerText = currentCandle.high.toFixed(5);
+                document.getElementById('price-l').innerText = currentCandle.low.toFixed(5);
+                
+                const cElement = document.getElementById('price-c');
+                cElement.innerText = currentCandle.close.toFixed(5);
+                
+                if (currentCandle.close >= currentCandle.open) {
+                    cElement.className = "text-[#10b981] font-bold";
+                } else {
+                    cElement.className = "text-rose-500 font-bold";
+                }
+            }
+
+            function draw() {
+                const rect = canvas.getBoundingClientRect();
+                const w = rect.width;
+                const h = rect.height;
+
+                if (canvas.width !== w * window.devicePixelRatio || canvas.height !== h * window.devicePixelRatio) {
+                    canvas.width = w * window.devicePixelRatio;
+                    canvas.height = h * window.devicePixelRatio;
+                    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+                }
+
+                ctx.clearRect(0, 0, w, h);
+
+                ctx.strokeStyle = 'rgba(63, 63, 70, 0.15)';
+                ctx.lineWidth = 1;
+                for (let y = 30; y < h; y += 40) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(w, y);
+                    ctx.stroke();
+                }
+
+                const { min, max } = getMinMax();
+                const spacing = w / candles.length;
+                const candleWidth = Math.max(5, spacing * 0.50);
+
+                for (let i = 0; i < candles.length; i++) {
+                    const c = candles[i];
+                    const x = i * spacing + spacing / 2;
+
+                    const yOpen = h - ((c.open - min) / (max - min)) * (h - 60) - 30;
+                    const yClose = h - ((c.close - min) / (max - min)) * (h - 60) - 30;
+                    const yHigh = h - ((c.high - min) / (max - min)) * (h - 60) - 30;
+                    const yLow = h - ((c.low - min) / (max - min)) * (h - 60) - 30;
+
+                    const isGreen = c.close >= c.open;
+                    const color = isGreen ? '#10b981' : '#ef4444';
+
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(x, yHigh);
+                    ctx.lineTo(x, yLow);
+                    ctx.stroke();
+
+                    ctx.fillStyle = color;
+                    const bodyHeight = Math.max(1.5, Math.abs(yClose - yOpen));
+                    const bodyY = Math.min(yOpen, yClose);
+
+                    ctx.beginPath();
+                    ctx.rect(x - candleWidth / 2, bodyY, candleWidth, bodyHeight);
+                    ctx.fill();
+                }
+
+                ctx.strokeStyle = 'rgba(59, 130, 246, 0.85)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                for (let i = 0; i < candles.length; i++) {
+                    const c = candles[i];
+                    const x = i * spacing + spacing / 2;
+                    const avgPrice = (c.open + c.close) / 2;
+                    const y = h - ((avgPrice - min) / (max - min)) * (h - 60) - 30;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            }
+
+            setInterval(() => {
+                let last = candles[candles.length - 1];
+                let tick = (Math.random() - 0.47) * 0.00008; 
+                last.close += tick;
+                last.high = Math.max(last.high, last.close);
+                last.low = Math.min(last.low, last.close);
+
+                updateHeaderDisplay(last);
+                draw();
+            }, 1000);
+
+            setInterval(() => {
+                let last = candles[candles.length - 1];
+                let open = last.close;
+                let close = open + (Math.random() - 0.47) * 0.00030;
+                let high = Math.max(open, close) + Math.random() * 0.00010;
+                let low = Math.min(open, close) - Math.random() * 0.00010;
+
+                candles.shift(); 
+                candles.push({ open, close, high, low }); 
+            }, 6000);
+
+            window.addEventListener('resize', draw);
+            
+            updateHeaderDisplay(candles[candles.length - 1]);
+            draw();
+        }
+
+        /* =======================================================
+           4. АДАПТИВНЫЙ АВТО-СЛАЙДЕР ОТЗЫВОВ (8 КАРТОЧЕК)
+           ======================================================= */
+        function initReviewsSlider() {
+            const track = document.getElementById('reviews-track');
+            const dotsContainer = document.getElementById('slider-dots');
+            if (!track || !dotsContainer) return;
+
+            const slides = Array.from(track.children);
+            const totalSlides = slides.length;
+            let currentIndex = 0;
+            let autoPlayInterval;
+
+            function getSlidesPerView() {
+                return window.innerWidth < 768 ? 1 : 2;
+            }
+
+            function getMaxIndex() {
+                return totalSlides - getSlidesPerView();
+            }
+
+            function buildDots() {
+                dotsContainer.innerHTML = '';
+                const maxSteps = getMaxIndex() + 1;
+                for (let i = 0; i < maxSteps; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = `h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'w-6 bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'w-2 bg-zinc-700 hover:bg-zinc-500'}`;
+                    dot.addEventListener('click', () => {
+                        currentIndex = i;
+                        updateSlider();
+                        resetAutoPlay();
+                    });
+                    dotsContainer.appendChild(dot);
+                }
+            }
+
+            function updateSlider() {
+                if (currentIndex > getMaxIndex()) {
+                    currentIndex = 0;
+                }
+
+                const cardWidth = slides[0].getBoundingClientRect().width;
+                const gap = 24;
+                const offset = currentIndex * (cardWidth + gap);
+
+                track.style.transform = `translateX(-${offset}px)`;
+
+                const dots = Array.from(dotsContainer.children);
+                dots.forEach((dot, idx) => {
+                    if (idx === currentIndex) {
+                        dot.className = 'h-2 w-6 bg-[#10b981] rounded-full transition-all duration-300 shadow-[0_0_8px_rgba(16,185,129,0.5)]';
+                    } else {
+                        dot.className = 'h-2 w-2 bg-zinc-700 rounded-full transition-all duration-300 hover:bg-zinc-500';
+                    }
+                });
+            }
+
+            function startAutoPlay() {
+                autoPlayInterval = setInterval(() => {
+                    if (currentIndex >= getMaxIndex()) {
+                        currentIndex = 0;
+                    } else {
+                        currentIndex++;
+                    }
+                    updateSlider();
+                }, 4000);
+            }
+
+            function resetAutoPlay() {
+                clearInterval(autoPlayInterval);
+                startAutoPlay();
+            }
+
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    currentIndex = 0;
+                    buildDots();
+                    updateSlider();
+                }, 150);
+            });
+
+            buildDots();
+            updateSlider();
+            startAutoPlay();
+        }
+
+        // Вспомогательные хелперы интерфейса
+        function scrollToForm() {
+            document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Переключатель модального окна политики конфиденциальности
+        function togglePrivacyModal() {
+            document.getElementById('privacy-modal').classList.toggle('hidden');
+        }
+
+        /* =======================================================
+           5. ИНДИВИДУАЛЬНЫЙ ТАЙМЕР НА 15 МИНУТ (LOCALSTORAGE)
+           ======================================================= */
+        const defaultMinutes = 15;
+        const storageKey = "forex_funnel_timer";
+        const now = new Date().getTime();
+        let deadline = localStorage.getItem(storageKey);
+
+        if (!deadline) {
+            deadline = now + defaultMinutes * 60 * 1000;
+            localStorage.setItem(storageKey, deadline);
+        } else {
+            deadline = parseInt(deadline);
+            if (deadline < now) {
+                deadline = now + defaultMinutes * 60 * 1000;
+                localStorage.setItem(storageKey, deadline);
+            }
+        }
+
+        function updateTimer() {
+            const current = new Date().getTime();
+            const timeLeft = deadline - current;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById("timer-minutes").innerText = "00";
+                document.getElementById("timer-seconds").innerText = "00";
+                localStorage.removeItem(storageKey);
+                return;
+            }
+
+            let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            document.getElementById("timer-minutes").innerText = minutes;
+            document.getElementById("timer-seconds").innerText = seconds;
+        }
+
+        updateTimer();
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        /* =======================================================
+           6. УМНАЯ УЛЬТРА-МАСКА ДЛЯ ТЕЛЕФОНА (РФ МОБИЛЬНЫЕ)
+           ======================================================= */
+        function initPhoneMask() {
+            const phoneInput = document.getElementById('user-phone');
+            if (!phoneInput) return;
+
+            phoneInput.addEventListener('input', function (e) {
+                let input = e.target.value.replace(/\D/g, '');
+                
+                if (input.startsWith('8')) {
+                    input = '7' + input.slice(1);
+                } else if (input.startsWith('9')) {
+                    input = '7' + input;
+                } else if (input === '') {
+                    e.target.value = '';
+                    return;
+                } else if (!input.startsWith('7')) {
+                    input = '7' + input;
+                }
+
+                input = input.substring(0, 11);
+
+                if (input.length > 1 && input[1] !== '9') {
+                    input = '79' + input.slice(2);
+                }
+
+                let formatted = '+7';
+                if (input.length > 1) {
+                    formatted += ' (' + input.substring(1, 4);
+                }
+                if (input.length >= 5) {
+                    formatted += ') ' + input.substring(4, 7);
+                }
+                if (input.length >= 8) {
+                    formatted += '-' + input.substring(7, 9);
+                }
+                if (input.length >= 10) {
+                    formatted += '-' + input.substring(9, 11);
+                }
+
+                e.target.value = formatted;
+            });
+
+            phoneInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Backspace' && e.target.value.length <= 4) {
+                    e.target.value = '';
+                }
+            });
+        }
+
+        /* =======================================================
+           7. ДИНАМИЧЕСКОЕ УБЫВАНИЕ МЕСТ + TOAST-УВЕДОМЛЕНИЯ
+           ======================================================= */
+        let spotsRemaining = 32;
+
+        const ruNames = ["Иван", "Алексей", "Дмитрий", "Сергей", "Андрей", "Михаил", "Роман", "Артем", "Максим", "Игорь", "Ольга", "Анна", "Елена", "Екатерина", "Наталья", "Юлия", "Татьяна"];
+        const ruCities = ["Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань", "Краснодар", "Нижний Новгород", "Челябинск", "Самара", "Ростов-на-Дону", "Уфа", "Воронеж", "Сочи"];
+        const ruActions = [
+            "забронировал место и получил торгового советника!",
+            "зарегистрировался в команду и получил доступ к сигналам!",
+            "прошел верификацию и закрепил за собой место!",
+            "успешно присоединился к закрытому Forex-чату!"
+        ];
+
+        function triggerSocialProofToast() {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const randomName = ruNames[Math.floor(Math.random() * ruNames.length)];
+            const randomCity = ruCities[Math.floor(Math.random() * ruCities.length)];
+            const randomAction = ruActions[Math.floor(Math.random() * ruActions.length)];
+
+            const toast = document.createElement('div');
+            toast.className = "bg-[#121212]/95 border border-[#10b981]/30 p-4 rounded-xl shadow-[0_4px_20px_rgba(16,185,129,0.15)] backdrop-blur-md flex items-start gap-3 text-xs text-zinc-100 max-w-sm pointer-events-auto transition-all duration-500 transform translate-y-10 opacity-0";
+            
+            toast.innerHTML = `
+                <div class="mt-0.5 w-3 h-3 rounded-full bg-[#10b981] animate-ping flex-shrink-0"></div>
+                <div>
+                    <span class="font-bold text-white">${randomName}</span> из г. <span class="font-semibold text-[#10b981]">${randomCity}</span>
+                    <p class="text-zinc-400 mt-0.5 text-[11px] leading-relaxed">${randomAction}</p>
+                </div>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            }, 100);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-[-10px]', 'opacity-0');
+                setTimeout(() => {
+                    toast.remove();
+                }, 500);
+            }, 4500);
+        }
+
+        function initDynamicSeatsAndToasts() {
+            function decrementSpotsLoop() {
+                const randomInterval = Math.floor(Math.random() * (8000 - 5000 + 1)) + 5000;
+
+                setTimeout(() => {
+                    if (spotsRemaining > 3) {
+                        spotsRemaining--;
+                        
+                        const countEl = document.getElementById('spots-count');
+                        if (countEl) {
+                            countEl.innerText = `${spotsRemaining} из 100`;
+                        }
+
+                        const progressBar = document.getElementById('progress-bar');
+                        if (progressBar) {
+                            progressBar.style.width = `${100 - spotsRemaining}%`;
+                        }
+
+                        triggerSocialProofToast();
+                    }
+                    decrementSpotsLoop();
+                }, randomInterval);
+            }
+
+            decrementSpotsLoop();
+        }
+
+        /* =======================================================
+           8. ИНТЕРФЕЙС FAQ (АККОРДЕОНЫ)
+           ======================================================= */
+        function toggleFaq(button) {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            const allAnswers = document.querySelectorAll('.faq-answer');
+            const allIcons = document.querySelectorAll('.fa-chevron-down');
+            allAnswers.forEach((ans, idx) => {
+                if (ans !== answer) {
+                    ans.style.maxHeight = null;
+                    allIcons[idx].style.transform = 'rotate(0deg)';
+                }
+            });
+
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        /* =======================================================
+           9. ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР ДЕПОЗИТА (УМНОЖЕНИЕ НА 10)
+           ======================================================= */
+        function initCalculator() {
+            const range = document.getElementById('calc-range');
+            const depositDisplay = document.getElementById('calc-deposit-val');
+            const profitDisplay = document.getElementById('calc-profit-val');
+
+            if (!range || !depositDisplay || !profitDisplay) return;
+
+            range.addEventListener('input', function() {
+                const depositValue = parseInt(this.value);
+                depositDisplay.innerText = `$${depositValue.toLocaleString()}`;
+
+                const estimatedProfit = depositValue * 10;
+                profitDisplay.innerText = `$${estimatedProfit.toLocaleString()}`;
+            });
+        }
+
+        /* Защита строк от инъекций */
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.toString()
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        /* =======================================================
+           10. УМНЫЙ ПЕРЕХВАТЧИК С ДИНАМИЧЕСКИМ ОПРЕДЕЛЕНИЕМ ГРУППЫ VK
+           ======================================================= */
+        document.getElementById('forex-lead-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            document.getElementById('error-fullname').classList.add('hidden');
+            document.getElementById('error-phone').classList.add('hidden');
+            document.getElementById('user-fullname').classList.remove('border-rose-500');
+            document.getElementById('user-phone').classList.remove('border-rose-500');
+
+            const fullname = document.getElementById('user-fullname').value.trim();
+            const phone = document.getElementById('user-phone').value.trim();
+            const submitBtn = document.getElementById('submit-btn');
+
+            let hasError = false;
+
+            const nameParts = fullname.split(/\s+/).filter(word => word.length > 0);
+            if (!fullname) {
+                document.getElementById('error-fullname').innerText = "Пожалуйста, введите имя и фамилию";
+                document.getElementById('error-fullname').classList.remove('hidden');
+                document.getElementById('user-fullname').classList.add('border-rose-500');
+                hasError = true;
+            } else if (nameParts.length < 2) {
+                document.getElementById('error-fullname').innerText = "Введите и имя, и фамилию через пробел";
+                document.getElementById('error-fullname').classList.remove('hidden');
+                document.getElementById('user-fullname').classList.add('border-rose-500');
+                hasError = true;
+            }
+
+            const digitsOnly = phone.replace(/\D/g, '');
+            const dummyPatterns = /^(.)\1+$/; 
+            
+            if (!phone) {
+                document.getElementById('error-phone').innerText = "Введите номер телефона РФ";
+                document.getElementById('error-phone').classList.remove('hidden');
+                document.getElementById('user-phone').classList.add('border-rose-500');
+                hasError = true;
+            } else if (digitsOnly.length !== 11) {
+                document.getElementById('error-phone').innerText = "Номер должен содержать 11 цифр";
+                document.getElementById('error-phone').classList.remove('hidden');
+                document.getElementById('user-phone').classList.add('border-rose-500');
+                hasError = true;
+            } else if (!digitsOnly.startsWith('7') || digitsOnly[1] !== '9') {
+                document.getElementById('error-phone').innerText = "Номер должен начинаться с +7 (9xx)";
+                document.getElementById('error-phone').classList.remove('hidden');
+                document.getElementById('user-phone').classList.add('border-rose-500');
+                hasError = true;
+            } else if (dummyPatterns.test(digitsOnly.slice(2))) {
+                document.getElementById('error-phone').innerText = "Пожалуйста, укажите настоящий номер";
+                document.getElementById('error-phone').classList.remove('hidden');
+                document.getElementById('user-phone').classList.add('border-rose-500');
+                hasError = true;
+            } else if (digitsOnly === '79123456789' || digitsOnly === '79000000000') {
+                document.getElementById('error-phone').innerText = "Шаблонные номера не принимаются";
+                document.getElementById('error-phone').classList.remove('hidden');
+                document.getElementById('user-phone').classList.add('border-rose-500');
+                hasError = true;
+            }
+
+            if (hasError) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "ОТПРАВКА АНКЕТЫ...";
+            submitBtn.style.opacity = "0.6";
+
+            // Считываем параметры
+            const urlParams = new URLSearchParams(window.location.search);
+            const vkId = urlParams.get('vk_id') || 'Не определен';
+            
+            // Захватываем utm_source (название группы)
+            const groupSource = urlParams.get('utm_source') || 'Прямой переход (без группы)';
+
+            let vkLink = 'Не определен (переход напрямую)';
+            if (vkId !== 'Не определен' && vkId !== '%userid%') {
+                if (/^\d+$/.test(vkId)) {
+                    vkLink = `https://vk.com/id${vkId}`;
+                } else {
+                    vkLink = `https://vk.com/${vkId}`;
+                }
+            } else if (vkId === '%userid%') {
+                vkLink = `Тестовый переход (В рассылке Сенлер тут автоматически появится рабочая ссылка)`;
+            }
+
+            const safeFullname = escapeHTML(fullname);
+            const safePhone = escapeHTML(phone);
+            const safeVkLink = escapeHTML(vkLink);
+            const safeGroupSource = escapeHTML(groupSource);
+
+            // ФОРМИРОВАНИЕ ТЕКСТА: Теперь бот указывает, из какой группы пришел лид
+            const textMessage = `🔔 <b>Новая заявка!</b>\n\n` +
+                                `📢 <b>Группа:</b> ${safeGroupSource}\n` +
+                                `👤 <b>ФИО:</b> ${safeFullname}\n` +
+                                `📞 <b>Телефон:</b> ${safePhone}\n` +
+                                `🔗 <b>Профиль ВК:</b> ${safeVkLink}`;
+
+            const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`;
+            const payload = {
+                chat_id: TG_CHAT_ID,
+                text: textMessage,
+                parse_mode: "HTML"
+            };
+
+            fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+            .then(async response => {
+                if (response.ok) {
+                    document.getElementById('form-card').innerHTML = `
+                        <div class="text-center py-10 px-4 flex flex-col items-center justify-center animate-[scale-up_0.3s_ease-out]">
+                            <div class="w-16 h-16 rounded-full bg-[#10b981]/15 text-[#10b981] flex items-center justify-center text-3xl mb-6 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3">Заявка успешно принята!</h3>
+                            <p class="text-xs text-zinc-400 leading-relaxed max-w-sm mx-auto">
+                                Твоё место в команде забронировано. Наш куратор уже проверяет анкету и свяжется с тобой в Telegram/WhatsApp в течение 10 минут!
+                            </p>
+                        </div>
+                    `;
+                    handleConversionTracking(vkId);
+                } else {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.description || `Код ответа ${response.status}`);
+                }
+            })
+            .catch(error => {
+                console.error("Сбой отправки:", error);
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Записаться бесплатно";
+                submitBtn.style.opacity = "1";
+                alert("Ошибка Telegram API: " + error.message + "\n\nПожалуйста, убедитесь, что бот назначен администратором вашей группы.");
+            });
+        });
+
+        /* Редирект на дожим */
+        function handleConversionTracking(vkId) {
+            if (vkId === 'Не определен' || vkId === '%userid%') return;
+            
+            setTimeout(() => {
+                window.location.href = "https://vk.com/app5898182_-238806952#s=3735132";
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
